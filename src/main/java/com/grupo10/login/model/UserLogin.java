@@ -35,4 +35,8 @@ public class UserLogin {
 
   @Column(name = "user_state", nullable = false)
   private boolean userState;
+
+  public UserLogin(boolean b) {
+    this.userState = b;
+  }
 }
