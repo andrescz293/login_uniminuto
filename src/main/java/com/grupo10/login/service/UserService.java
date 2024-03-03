@@ -1,20 +1,20 @@
 package com.grupo10.login.service;
 
-import com.grupo10.login.model.User;
+import com.grupo10.login.model.UserLogin;
 import com.grupo10.login.util.DataLogin;
 
 import java.util.List;
 
 public interface UserService {
-    User updateUser(Integer userId, User updatedUser);
+    UserLogin updateUser(Integer userId, UserLogin updatedUserLogin);
 
-    User updateUserState(Integer userId, Boolean userState);
+    UserLogin updateUserState(Integer userId, Boolean userState);
 
-    List<User> getAllUsers();
+    List<UserLogin> getAllUsers();
 
-    User getUserById(Integer userId);
+    UserLogin getUserById(Integer userId);
 
-    User createUser(User user);
+    UserLogin createUser(UserLogin userLogin);
 
-    User authenticateUser(DataLogin dataLogin);
+    UserLogin authenticateUser(DataLogin dataLogin);
 }

@@ -1,6 +1,6 @@
 package com.grupo10.login.service.impl;
 
-import com.grupo10.login.model.User;
+import com.grupo10.login.model.UserLogin;
 import com.grupo10.login.repository.UserRepository;
 import com.grupo10.login.service.UserService;
 import com.grupo10.login.util.DataLogin;
@@ -17,54 +17,54 @@ public class UserServiceImp implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User createUser(User user) {
-        if (userRepository.existsByUserLogin(user.getUserLogin())) {
+    public UserLogin createUser(UserLogin userLogin) {
+        if (userRepository.existsByUserLogin(userLogin.getUserLogin())) {
             throw new RuntimeException("User with this login already exists");
         }
-        if (userRepository.existsByUserEmail(user.getUserEmail())) {
+        if (userRepository.existsByUserEmail(userLogin.getUserEmail())) {
             throw new RuntimeException("User with this email already exists");
         }
-        user.setUserState(true);
-        return userRepository.save(user);
+        userLogin.setUserState(true);
+        return userRepository.save(userLogin);
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<UserLogin> getAllUsers() {
         return userRepository.findAll();
     }
 
     @Override
-    public User getUserById(Integer userId) {
+    public UserLogin getUserById(Integer userId) {
         return userRepository.findById(userId).orElse(null);
     }
 
     @Override
-    public User updateUser(Integer userId, User updatedUser) {
-        Optional<User> existingUser = userRepository.findById(userId);
+    public UserLogin updateUser(Integer userId, UserLogin updatedUserLogin) {
+        Optional<UserLogin> existingUser = userRepository.findById(userId);
         if (existingUser.isPresent()) {
-            User userToUpdate = existingUser.get();
-            userToUpdate.setUserName(updatedUser.getUserName());
-            userToUpdate.setUserEmail(updatedUser.getUserEmail());
-            return userRepository.save(userToUpdate);
+            UserLogin userLoginToUpdate = existingUser.get();
+            userLoginToUpdate.setUserName(updatedUserLogin.getUserName());
+            userLoginToUpdate.setUserEmail(updatedUserLogin.getUserEmail());
+            return userRepository.save(userLoginToUpdate);
         } else {
             return null;
         }
     }
 
     @Override
-    public User updateUserState(Integer userId, Boolean userState) {
-        Optional<User> existingUser = userRepository.findById(userId);
+    public UserLogin updateUserState(Integer userId, Boolean userState) {
+        Optional<UserLogin> existingUser = userRepository.findById(userId);
         if (existingUser.isPresent()) {
-            User userToUpdate = existingUser.get();
-            userToUpdate.setUserState(userState);
-            return userRepository.save(userToUpdate);
+            UserLogin userLoginToUpdate = existingUser.get();
+            userLoginToUpdate.setUserState(userState);
+            return userRepository.save(userLoginToUpdate);
         } else {
             return null;
         }
     }
 
     @Override
-    public User authenticateUser(DataLogin dataLogin) {
+    public UserLogin authenticateUser(DataLogin dataLogin) {
         return userRepository.findByUserLoginAndUserPassword(dataLogin.getUserLogin(), dataLogin.getUserPassword());
     }
 
